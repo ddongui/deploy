@@ -1,7 +1,7 @@
 {
   "name": "@ddongui/deploy",
   "version": "0.0.1",
-  "description": "",
+  "description": "Publish your static website in Git",
   "bin": {
     "deploy": "dist/bin/index.cjs"
   },

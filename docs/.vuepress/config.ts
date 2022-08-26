@@ -3,6 +3,7 @@ import { defineUserConfig, defaultTheme } from "vuepress"
 export default defineUserConfig({
     base: "/deploy/",
     title: "deploy",
+    description: "Publish your static website in Git",
     theme: defaultTheme({
         navbar: [{ text: "指南", link: "/guide/install" }],
         sidebar: {
