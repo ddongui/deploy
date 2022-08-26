@@ -1,6 +1,6 @@
 {
   "name": "@ddongui/deploy",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Publish your static website in Git",
   "bin": {
     "deploy": "dist/bin/index.cjs"
@@ -10,7 +10,8 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
-  "type": "module",
+  "type": "commonjs",
+  "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
