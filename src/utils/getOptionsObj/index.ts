@@ -23,7 +23,7 @@ const handleDifferentFileExt = Strategy({
     },
     ts(fillFullPath: string) {
         require("ts-node/register")
-        return require(fillFullPath).default()
+        return require(fillFullPath).default
     }
 })
 

@@ -1,9 +1,9 @@
 {
   "name": "@ddongui/deploy",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Publish your static website in Git",
   "bin": {
-    "deploy": "dist/bin/index.cjs"
+    "deploy": "dist/bin/index.js"
   },
   "scripts": {
     "build": "tsup",
