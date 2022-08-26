@@ -2,5 +2,5 @@ node_modules
 # Bundle
 dist
 
-.cache
-.temp
+docs/.vuepress/.cache
+docs/.vuepress/.temp
