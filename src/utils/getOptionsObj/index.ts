@@ -2,6 +2,7 @@ import { Options } from "../.."
 import Strategy from "../strategy"
 import fs from "fs"
 import { FileInfo } from "../getConfigFile"
+import shell from "shelljs"
 
 export default function getOptionsObj(fileInfos: FileInfo[]) {
     let options: Options | undefined
@@ -22,8 +23,15 @@ const handleDifferentFileExt = Strategy({
         return require(fillFullPath)
     },
     ts(fillFullPath: string) {
-        require("ts-node/register")
-        return require(fillFullPath).default
+        shell.exec(`tsc ${fillFullPath} --module commonjs`)
+        const jsFilePath = fillFullPath.replace(/.ts/, ".js")
+        const cjsFilePath = fillFullPath.replace(/.ts/, ".cjs")
+        fs.renameSync(jsFilePath, cjsFilePath)
+        /* require("ts-node/register") */
+        const options = require(cjsFilePath).default
+        // 删除cjs文件
+        fs.unlinkSync(cjsFilePath)
+        return options
     }
 })
 

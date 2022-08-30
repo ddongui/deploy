@@ -3,6 +3,8 @@ import shell from "shelljs";
 import type { Options } from "../";
 import getOptionsObj from "../utils/getOptionsObj";
 import getConfigFile from "../utils/getConfigFile";
+import fs from "fs"
+import path from "path"
 
 /* const info = process.argv[2] */
 const currentWorkingDirectory = process.cwd()
@@ -69,7 +71,7 @@ const gitCommand = {
                     console.log("推送超时,正在尝试再一次推送...");
                 ({ stderr, code } = shell.exec(`git push origin ${params.branchName} -f`))
 
-                timeOut = stderr.match(/\d\s*ms/)
+                timeOut = stderr.match(/\d\s*ms/) || stderr.match(/errno 10054/)
             } while (code && timeOut)
         }
     }
@@ -97,11 +99,15 @@ function macroCommand(options: Options) {
 if (options) {
     const pushToGitHub = macroCommand(options)
     pushToGitHub.add(gitCommand.cd)
-    pushToGitHub.add(gitCommand.init)
-    pushToGitHub.add(gitCommand.createBranch)
+
+    if (!fs.existsSync(path.resolve(currentWorkingDirectory, options.relativePath, ".git"))) {
+        pushToGitHub.add(gitCommand.init)
+        pushToGitHub.add(gitCommand.createBranch)
+        pushToGitHub.add(gitCommand.addRemoteURL)
+    }
+
     pushToGitHub.add(gitCommand.add)
     pushToGitHub.add(gitCommand.commit)
-    pushToGitHub.add(gitCommand.addRemoteURL)
     pushToGitHub.add(gitCommand.push)
     pushToGitHub.exec()
 } else {
